@@ -57,6 +57,8 @@ spec:css-env-1; type:function; text:env()
 	}
 </pre>
 
+<link rel="stylesheet" href="style.css" />
+
 <style>
 	/* work-around for https://github.com/tabatkins/bikeshed/issues/1799 */
 	div.example {
@@ -66,6 +68,20 @@ spec:css-env-1; type:function; text:env()
 		content: "¶";
 	}
 </style>
+
+<script>
+document.addEventListener("DOMContentLoaded", ()=>{
+	for (let e of document.querySelectorAll(".swatch")) {
+		e.tabIndex = "0";
+		const swatchColor = getComputedStyle(e).getPropertyValue("--color");
+
+		if (!CSS.supports('color', swatchColor)) {
+			e.style.background = "repeating-linear-gradient(135deg, red 0, red 4px, white 4px, white 8px)";
+			e.setAttribute("title", "Your browser does not recognize this color value, so we can't preview it.");
+		}
+	}
+});
+</script>
 
 
 <h2 id="introduction">
@@ -7709,6 +7725,68 @@ Controlling Color Font Palettes: The 'font-palette' property</h3>
 			}
 		}
 		</pre>
+	</div>
+
+	<div class="example" id="ex-palette-mix-3">
+		A font has a dark mode palette with the following three entries:
+
+		<ol>
+			<li value="0"><span class="swatch" style="--color: #eee8aa"></span> #eee8aa</li>
+			<li><span class="swatch" style="--color: #DD4541"></span> #dd4541</li>
+			<li><span class="swatch" style="--color: #72342e"></span> #72342e</li>
+		</ol>
+
+		In addition, there are two custom palettes defined, one called "--warm":
+
+		<ol>
+			<li value="0"><span class="swatch" style="--color: #f4c855"></span> oklch(85% 0.14 88)</li>
+			<li><span class="swatch" style="--color: #c86459"></span> oklch(62% 0.13 28)</li>
+			<li><span class="swatch" style="--color: #492924"></span> oklch(32% 0.05 29.6)</li>
+		</ol>
+
+		and one called "--soft":
+
+		<ol>
+			<li value="0"><span class="swatch" style="--color: #e3e3be"></span> color(display-p3 0.89 0.89 0.76)</li>
+			<li><span class="swatch" style="--color: #c98a8b"></span> color(display-p3 0.75 0.55 0.55)</li>
+			<li><span class="swatch" style="--color: #856e6b"></span> color(display-p3 0.508 0.435 0.422)</li>
+		</ol>
+
+		this palette mix:
+
+		<pre class="lang-css">
+			font-palette: palette-mix(dark 20%, --warm 45%, --soft);
+		</pre>
+
+		will create the following palette 
+		(the percentage of --soft is omitted, so it is 35%,
+		and the color interpolation method is omitted, so it is ''oklab''):
+
+		<!-- 
+		color-mix(in oklab, #eee8aa 20%, oklch(85% 0.14 88) 45%, color(display-p3 0.89 0.89 0.76))
+		https://apps.colorjs.io/color-mix/?mix=color-mix(in%20oklab%2C%20%23eee8aa%2020%25%2C%20oklch(85%25%200.14%2088)%2045%25%2C%20color(display-p3%200.89%200.89%200.76))
+
+		color-mix(in oklab, #dd4541 20%, oklch(62% 0.13 28) 45%, color(display-p3 0.75 0.55 0.55))
+		https://apps.colorjs.io/color-mix/?mix=color-mix(in%20oklab%2C%20%23dd4541%2020%25%2C%20oklch(62%25%200.13%2028)%2045%25%2C%20color(display-p3%200.75%200.55%200.55))
+
+		color-mix(in oklab, #72342e 20%, oklch(32% 0.05 29.6) 45%, color(display-p3 0.508 0.435 0.422))
+		https://apps.colorjs.io/color-mix/?mix=color-mix(in%20oklab%2C%20%2372342e%2020%25%2C%20oklch(32%25%200.05%2029.6)%2045%25%2C%20color(display-p3%200.508%200.435%200.422))
+
+		-->
+
+		<ol>
+			<li value="0"><span class="swatch" style="--color: #edd88f"></span> oklab(88.389% -0.00651 0.09474)</li>
+			<li><span class="swatch" style="--color: #ce6d66"></span> oklab(64.379% 0.11148 0.05236)</li>
+			<li><span class="swatch" style="--color: #66433e"></span> oklab(42.124% 0.04469 0.02408)</li>
+		</ol>
+
+		<!-- 
+		<ol>
+			<li value=""0"><span class="swatch" style="--color: "></span> </li>
+			<li><span class="swatch" style="--color: "></span> </li>
+			<li><span class="swatch" style="--color: "></span> </li>
+		</ol>
+		 -->
 	</div>
 
 	<div class="example" id="ex-bixa-palette-anim">
