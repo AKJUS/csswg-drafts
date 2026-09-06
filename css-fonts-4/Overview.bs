@@ -9268,7 +9268,13 @@ Changes</h2>
 Changes from the <a href="https://www.w3.org/TR/2024/WD-css-fonts-4-20240201/">1 February 2024 working draft</a></h3>
 
 	<ul>
-		<!-- to 18 Aug 2026 -->
+		<!-- to 06 Sept 2026 -->
+		 <li>Updated palette-mix() to match color-mix() in taking a list of one or more items, rather than being restricted to exactly two
+			(<a href="https://github.com/w3c/csswg-drafts/issues/14452">Issue 14452</a>)
+		 </li>
+		<li>Added font-synthesis-position to the list of font-* properties which cascade independently
+			(<a href="https://github.com/w3c/csswg-drafts/issues/14397">Issue 14397</a>)
+		</li>
 		<li>Clarified the suitability of system-ui
 			(<a href="https://github.com/w3c/csswg-drafts/pull/14326">PR 14326</a>)
 		</li>
